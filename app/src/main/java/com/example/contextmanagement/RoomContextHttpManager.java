@@ -18,9 +18,6 @@ public class RoomContextHttpManager {
         this.contextManagementActivity = contextManagementActivity;
     }
 
-    public void changeTextDebug(String room){
-        contextManagementActivity.changeTextDebugManager();
-    }
 
     public void retrieveRoomContextState(String room){
 

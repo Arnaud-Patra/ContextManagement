@@ -62,15 +62,5 @@ public class ContextManagementActivity extends Activity {
         roomContextHttpManager.switchLight(state,room);
     }
 
-    //Debug
-    public void changeTextDebug(View view) {
-        roomContextHttpManager.changeTextDebug(room);
-    }
-    public void changeTextDebugManager() {
-        // To remove
-        TextView myAwesomeTextView = findViewById(R.id.myAwesomeTextView);
-        //in your OnCreate() method
-        myAwesomeTextView.setText("My Awesome Text");
 
-    }
 }
