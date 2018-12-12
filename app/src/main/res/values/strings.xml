@@ -9,6 +9,7 @@
     <string name="ringonoff">Ring On/Off</string>
     <string name="edit_message">EditMe</string>
     <string name="ok2">OkDebug</string>
+    <string name="enter_light">Enter light id</string>
 
 
 </resources>

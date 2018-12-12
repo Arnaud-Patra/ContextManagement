@@ -1,10 +1,10 @@
-package com.example.contextmanagement;
+package com.example.contextmanagement.HTTP;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
+import com.example.contextmanagement.ContextManagementActivity;
+import com.example.contextmanagement.ContextState.RoomContextState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,10 +19,9 @@ public class RoomContextHttpManager {
     }
 
 
-    public void retrieveRoomContextState(String room){
+    public void retrieveRoomContextState(String roomId){
 
-        //String url =  "https://faircorp-arnaud-patra.cleverapps.io/api/rooms";
-        String url =  "http://10.0.2.2:8083" + "/" + room + "/";
+        String url =  "https://faircorp-arnaud-patra.cleverapps.io/api/lights"+ "/" + roomId + "/";
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(contextManagementActivity);
 
@@ -36,10 +35,9 @@ public class RoomContextHttpManager {
                             String id = response.getString("id").toString();
                             int lightLevel = Integer.parseInt(response.getJSONObject("light").get("level").toString());
                             String lightStatus = response.getJSONObject("light").get("status").toString();
+                            int roomId = Integer.parseInt(response.getJSONObject("light").get("roomId").toString());;
 
-                            // do something with results...
-                            // notify main activity for update...
-                            contextManagementActivity.onUpdate(new RoomContextState(id, lightLevel,lightStatus));
+                            contextManagementActivity.onRoomUpdate(new RoomContextState(id, lightLevel,lightStatus));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

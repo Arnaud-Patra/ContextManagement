@@ -1,4 +1,4 @@
-package com.example.contextmanagement;
+package com.example.contextmanagement.ContextState;
 
 public class RoomContextState {
 

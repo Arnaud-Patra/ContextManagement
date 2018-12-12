@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/grey"
+                android:background="@android:color/background_light"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -12,19 +12,12 @@
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
         <TextView
-                android:id="@+id/myAwesomeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="Escriba el mensaje y luego clickee el canal a ser enviado"
-                android:textSize="20sp" /><!--DEBUG-->
-        <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/enter_room"
-                android:textAlignment="center" />
+                android:text="@string/enter_light"
+                android:textAlignment="center"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -44,24 +37,16 @@
 
             <Button
                     android:id="@+id/buttonCheck"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_weight=".30"
                     android:layout_height="wrap_content"
                     android:onClick="checkRoom"
-                    android:text="@string/ok" />
-            <Button
-                    android:id="@+id/button3"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dp"
-                    android:layout_weight=".30"
-                    android:layout_height="wrap_content"
-                    android:onClick="changeTextDebug"
-                    android:text="@string/ok2" /><!--DEBUG-->
+                    android:text="@string/ok"/>
         </LinearLayout>
     </LinearLayout>
 
-    <requestFocus />
+    <requestFocus/>
 
     <RelativeLayout
             android:id="@+id/contextLayout"
@@ -95,14 +80,14 @@
                         android:layout_gravity="right"
                         android:text="@string/light"
                         android:textAlignment="gravity"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"/>
 
                 <TextView
                         android:id="@+id/textViewLightValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/red"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"/>
             </TableRow>
 
             <TableRow
@@ -118,14 +103,14 @@
                         android:layout_gravity="right"
                         android:text="@string/noise"
                         android:textAlignment="gravity"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"/>
 
                 <TextView
                         android:id="@+id/textViewNoiseValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/red"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"/>
             </TableRow>
         </TableLayout>
 
@@ -138,7 +123,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
                 android:contentDescription="@string/image_content_description"
-                android:src="@drawable/ic_bulb_on" />
+                android:src="@drawable/ic_bulb_on"/>
 
         <LinearLayout
                 android:id="@+id/linearLayoutButtons"
@@ -149,23 +134,23 @@
 
             <Button
                     android:id="@+id/button1"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_marginRight="14dp"
                     android:onClick="switchLight"
-                    android:text="@string/lightonoff" />
+                    android:text="@string/lightonoff"/>
 
             <Button
                     android:id="@+id/button2"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_marginRight="14dp"
                     android:onClick="switchRinger"
-                    android:text="@string/ringonoff" />
+                    android:text="@string/ringonoff"/>
         </LinearLayout>
     </RelativeLayout>
 
