@@ -80,9 +80,8 @@ public class ContextManagementActivity extends Activity {
     public void onUpdate(LightContextState lightContextState){
 
         this.LightState = lightContextState;
-        //setContentView(R.layout.lightinfo);
 
-        myAdapter.getMyLight(lightContextState);
+        //myAdapter.getMyLight(lightContextState);
         //return LightState;
 
 
@@ -92,9 +91,9 @@ public class ContextManagementActivity extends Activity {
 
     //Lauch the GET to retrieveAllRoomsContextState. To remove later.
     public void GetRooms(View view) {
-
         roomContextHttpManager.retrieveAllRoomsContextState();
     }
+
     //update room spinner
     public void onRoomUpdate(ArrayList<String> rooms) {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerRoom);
@@ -111,17 +110,38 @@ public class ContextManagementActivity extends Activity {
 
         //Get all lights of a room
         roomContextHttpManager.retrieveAllLightsContextState(roomId);
+
+        lightContextHttpManager.retrieveLightContextState("1");//DEBUG
+        lightContextHttpManager.retrieveLightContextState("1");//DEBUG
+    }
+
+    public void getLightContextState(String lightId) {
+        lightContextHttpManager.retrieveLightContextState(lightId);
+
+        roomContextHttpManager.retrieveAllLightsContextState("-12");//DEBUG ONLY
     }
 
     //Update list of light on RecyclerView
     public void UpdateRecyclerView(ArrayList<String> lightsList){
+        String status;
 
         //Useless?
-        setContentView(R.layout.lightinfo);
+        //setContentView(R.layout.lightinfo);
 
         //Convert ArrayList to String[].
         String[] lightsArr = new String[lightsList.size()];
         lightsArr = lightsList.toArray(lightsArr);
+
+
+        //Get the lights info corresponding to the room.
+        for(String lightId : lightsArr ){
+            getLightContextState(lightId);
+            if(lightId.equals(this.LightState.getLightId())){
+                status =this.LightState.getStatus();
+
+            }
+            //lightContextHttpManager.retrieveLightContextState(lightId);
+        }
 
 
 

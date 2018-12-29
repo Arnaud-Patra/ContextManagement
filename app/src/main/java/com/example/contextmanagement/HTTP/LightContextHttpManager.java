@@ -39,40 +39,38 @@ public class LightContextHttpManager {
 
         //change Light status
         JsonObjectRequest contextRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
+                @Override
+                public void onResponse(JSONObject response) {
+                try {
 
+                    String id = response.getString("id").toString();
+                    int lightLevel = response.getInt("level");
+                    String lightStatus = response.getString("status").toString();
+                    int roomId = response.getInt("roomId");
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
+                    contextManagementActivity.onUpdate(new LightContextState(id, lightLevel,lightStatus,roomId));
 
-                            String id = response.getString("id").toString();
-                            int lightLevel = response.getInt("level");
-                            String lightStatus = response.getString("status").toString();
-                            int roomId = response.getInt("roomId");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                            contextManagementActivity.onUpdate(new LightContextState(id, lightLevel,lightStatus,roomId));
+            }
+        }, new Response.ErrorListener() {
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Creation of popup message
+                Context context = contextManagementActivity;
+                CharSequence text = "Error : light not retrieved";
+                int duration = Toast.LENGTH_SHORT;
 
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Creation of popup message
-                        Context context = contextManagementActivity;
-                        CharSequence text = "Error : light not retrieved";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        // Some error to access URL : Room may not exists...
-                    }
-                });
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                // Some error to access URL : Room may not exists...
+                }
+            });
 
         queue.add(contextRequest);
 
