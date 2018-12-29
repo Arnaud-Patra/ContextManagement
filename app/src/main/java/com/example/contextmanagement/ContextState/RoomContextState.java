@@ -2,39 +2,53 @@ package com.example.contextmanagement.ContextState;
 
 public class RoomContextState {
 
-    private String room;
-    private String status;
-    private int light;
-    private float noise;
 
-    public RoomContextState(String room, String status, int light, float noise) {
+
+    private String roomId;
+    private String name;
+    private int floor;
+    private String buildingId;
+
+    public RoomContextState(String roomId, String name, int floor, String buildingId) {
         super();
-        this.room = room;
-        this.status = status;
-        this.light = light;
-        this.noise = noise;
+        this.roomId = roomId;
+        this.name = name;
+        this.floor = floor;
+        this.buildingId = buildingId;
     }
 
-    public RoomContextState(String room, int light, String status) {
-        super();
-        this.room = room;
-        this.status = status;
-        this.light = light;
+
+    public String getRoomId() {
+        return roomId;
     }
 
-    public String getRoom() {
-        return this.room;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
-    public String getStatus() {
-        return this.status;
+    public String getName() {
+        return name;
     }
 
-    public int getLight() {
-        return this.light;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public float getNoise() {
-        return this.noise;
+    public int getFloor() {
+        return floor;
     }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
+    }
+
+
 }
