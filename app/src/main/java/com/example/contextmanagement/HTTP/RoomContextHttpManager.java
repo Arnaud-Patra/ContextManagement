@@ -99,7 +99,9 @@ public class RoomContextHttpManager {
                                 }
                             }
 
-                            contextManagementActivity.UpdateRecyclerView(lights);
+                            //contextManagementActivity.UpdateRecyclerView(lights);
+
+                            contextManagementActivity.updateLightList(lights);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

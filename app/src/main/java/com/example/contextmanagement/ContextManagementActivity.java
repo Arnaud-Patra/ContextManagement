@@ -16,6 +16,7 @@ import com.example.contextmanagement.Recycler.MyAdapter;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContextManagementActivity extends Activity {
 
@@ -26,6 +27,8 @@ public class ContextManagementActivity extends Activity {
     MyAdapter myAdapter = new MyAdapter(this);
     private RoomContextState RoomState;
     private LightContextState LightState;
+
+    public ArrayList<LightContextState> lightList;
 
     //Recycler
     private RecyclerView mRecyclerView;
@@ -76,14 +79,15 @@ public class ContextManagementActivity extends Activity {
         lightContextHttpManager.switchLight(lightId);
     }
 
-    /*Update the lights*/
+    /*Update the lights with a new light*/
     public void onUpdate(LightContextState lightContextState){
 
         this.LightState = lightContextState;
+        //Update lightList with a new light
+        this.lightList.add(lightContextState);
 
         //myAdapter.getMyLight(lightContextState);
         //return LightState;
-
 
     }
 
@@ -111,23 +115,43 @@ public class ContextManagementActivity extends Activity {
         //Get all lights of a room
         roomContextHttpManager.retrieveAllLightsContextState(roomId);
 
-        lightContextHttpManager.retrieveLightContextState("1");//DEBUG
-        lightContextHttpManager.retrieveLightContextState("1");//DEBUG
+        this.lightList = new ArrayList<LightContextState>();
     }
 
-    public void getLightContextState(String lightId) {
-        lightContextHttpManager.retrieveLightContextState(lightId);
+    public void updateLightList(ArrayList<String> lightsList){
 
-        roomContextHttpManager.retrieveAllLightsContextState("-12");//DEBUG ONLY
+        //Convert ArrayList to String[].
+        String[] lightsArr = new String[lightsList.size()];
+        lightsArr = lightsList.toArray(lightsArr);
+
+        //Update lightList
+        for(int i = 0 ; i<lightsArr.length ; i++) {
+            lightContextHttpManager.retrieveLightContextState(lightsArr[i]);
+        }
+
+        /*
+        for(int i = 0 ; i<lightList.length ; i++) {
+            if(lightList[i][0] != null) {
+                String lightId = lightList[i][0];
+                lightContextHttpManager.retrieveLightContextState(lightId);
+            }
+        }
+        */
+    }
+
+
+    public void getLightContextState(View view) {
+        lightContextHttpManager.retrieveLightContextState("3");
     }
 
     //Update list of light on RecyclerView
-    public void UpdateRecyclerView(ArrayList<String> lightsList){
+    public void UpdateRecyclerView(View view){
+
         String status;
 
         //Useless?
-        //setContentView(R.layout.lightinfo);
-
+        setContentView(R.layout.lightinfo);
+/*
         //Convert ArrayList to String[].
         String[] lightsArr = new String[lightsList.size()];
         lightsArr = lightsList.toArray(lightsArr);
@@ -135,15 +159,17 @@ public class ContextManagementActivity extends Activity {
 
         //Get the lights info corresponding to the room.
         for(String lightId : lightsArr ){
-            getLightContextState(lightId);
+            getLightContextState(null);
             if(lightId.equals(this.LightState.getLightId())){
                 status =this.LightState.getStatus();
-
             }
-            //lightContextHttpManager.retrieveLightContextState(lightId);
         }
+*/
 
 
+        //Convert the lightList to something else
+        //...
+        String[] lightsArr = null; //DEBUG
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_lights_recycler_view);
 
@@ -156,9 +182,8 @@ public class ContextManagementActivity extends Activity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(lightsArr, lightContextHttpManager);
+        mAdapter = new MyAdapter(lightList, lightContextHttpManager);
         mRecyclerView.setAdapter(mAdapter);
-
 
     }
 

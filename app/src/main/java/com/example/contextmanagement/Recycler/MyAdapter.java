@@ -12,13 +12,12 @@ import com.example.contextmanagement.ContextState.LightContextState;
 import com.example.contextmanagement.HTTP.LightContextHttpManager;
 import com.example.contextmanagement.R;
 
+import java.util.ArrayList;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
-    private String[] mDataset;
-
     //Context management
     //private LightContextHttpManager lightContextHttpManager = new LightContextHttpManager(this);
-    private LightContextState lightState;
+    private ArrayList<LightContextState> mDataset;
 
     private LightContextHttpManager lightContextHttpManager;
     private ContextManagementActivity contextManagementActivity;
@@ -48,7 +47,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset,LightContextHttpManager lightContextHttpManager) {
+    //public MyAdapter(String[] myDataset) {
+    public MyAdapter(ArrayList<LightContextState> myDataset, LightContextHttpManager lightContextHttpManager) {
         this.mDataset = myDataset;
         this.lightContextHttpManager = lightContextHttpManager;
     }
@@ -65,9 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 
-    public void getMyLight(LightContextState lightContextState){
-        this.lightState = lightContextState;
-    }
+
 
 
     // Replace the contents of a view (invoked by the layout manager) void onBindViewHolder (VH holder, int position, List<Object> payloads)
@@ -80,22 +78,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         //LightContextState lightState = new LightContextState("0", 0,"OFF",-9);
 
         //Get the light information
-        String lightId = mDataset[position];
-        lightContextHttpManager.retrieveLightContextState(lightId);
+        LightContextState Light = mDataset.get(position);
 
         //Set level
-        String level = Integer.toString(lightState.getLevel());
+        String level = Integer.toString(Light.getLevel());
         holder.textLevel.setText(level);
 
         //set lightId :
-        holder.textToFill.setText(mDataset[position]);
+        holder.textToFill.setText(mDataset.get(position).getLightId());
 
         //Set state of switch
-        String status = lightState.getStatus();
+        String status = mDataset.get(position).getStatus();
         if(status.equals("ON")){
-            holder.toggle.setChecked(false);
-        }else{
             holder.toggle.setChecked(true);
+        }else{
+            holder.toggle.setChecked(false);
         }
         //Set level
 
@@ -104,10 +101,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
-                    lightContextHttpManager.switchLight(mDataset[position]);
+                    lightContextHttpManager.switchLight(mDataset.get(position).getLightId());
                 } else {
                     // The toggle is disabled
-                    lightContextHttpManager.switchLight(mDataset[position]);
+                    lightContextHttpManager.switchLight(mDataset.get(position).getLightId());
                 }
             }
         });
@@ -117,6 +114,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
