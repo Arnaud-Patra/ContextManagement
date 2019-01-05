@@ -138,11 +138,7 @@ public class ContextManagementActivity extends Activity {
         }
         */
     }
-
-
-    public void getLightContextState(View view) {
-        lightContextHttpManager.retrieveLightContextState("3");
-    }
+    
 
     //Update list of light on RecyclerView
     public void UpdateRecyclerView(View view){
