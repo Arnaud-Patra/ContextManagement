@@ -9,4 +9,8 @@
 
     </style>
 
+    <style name="MySpinnerLook"
+           parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textSize">22sp</item>
+    </style>
 </resources>

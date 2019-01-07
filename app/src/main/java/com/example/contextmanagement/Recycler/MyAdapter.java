@@ -74,8 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        //initialisation of light TODO : fix This
-        //LightContextState lightState = new LightContextState("0", 0,"OFF",-9);
+
 
         //Get the light information
         LightContextState Light = mDataset.get(position);

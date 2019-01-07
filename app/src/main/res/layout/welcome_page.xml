@@ -4,15 +4,16 @@
                                              android:layout_height="match_parent">
 
     <Spinner
+            style="@style/MySpinnerLook"
             android:layout_width="187dp"
-            android:layout_height="20dp" android:layout_alignParentRight="true"
+            android:layout_height="45dp" android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" android:layout_alignParentTop="true"
             android:id="@+id/spinnerRoom"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="156dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="24dp" android:layout_marginStart="24dp"/>
+            android:layout_marginLeft="16dp" android:layout_marginStart="16dp" android:background="@color/grey"/>
     <Button
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -46,14 +47,20 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginRight="14dp"
                 android:onClick="GetRooms"
-                android:text="Update Rooms"/>
+                android:text="Reload Rooms"/>
     </LinearLayout>
-    <Button
-            android:text="See recyclerView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="UpdateRecyclerView"
-            android:id="@+id/buttonDebug" android:layout_marginTop="74dp"
-            app:layout_constraintTop_toBottomOf="@+id/button" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="130dp" android:layout_marginStart="130dp"/>
+    <RelativeLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" tools:visibility="gone"/>
+    </RelativeLayout>
+
+
 </android.support.constraint.ConstraintLayout>

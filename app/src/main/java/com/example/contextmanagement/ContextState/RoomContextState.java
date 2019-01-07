@@ -9,7 +9,7 @@ public class RoomContextState {
     private int floor;
     private String buildingId;
 
-    public RoomContextState(String roomId, String name, int floor, String buildingId) {
+    public RoomContextState(String roomId, int floor,String name, String buildingId) {
         super();
         this.roomId = roomId;
         this.name = name;

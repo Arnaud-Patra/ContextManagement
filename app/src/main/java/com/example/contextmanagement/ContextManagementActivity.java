@@ -29,13 +29,15 @@ public class ContextManagementActivity extends Activity {
     private LightContextState LightState;
 
     public ArrayList<LightContextState> lightList;
+    public ArrayList<RoomContextState> roomList;
+    public int numberOfLights;
 
     //Recycler
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-
+    private Spinner mySpinner;
+    private RoomContextState myRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +47,6 @@ public class ContextManagementActivity extends Activity {
         //Get the rooms when first opening the app.
         GetRooms(null);
 
-        /*
-        //Get the roomId from EditText
-        ((Button) findViewById(R.id.buttonCheck)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String lightId = ((EditText) findViewById(R.id.editText1))
-                        .getText().toString();
-                lightContextHttpManager.retrieveLightContextState(lightId);
-            }
-
-        });
-
-
-        */
         Context context = this;
 
     }
@@ -86,86 +75,93 @@ public class ContextManagementActivity extends Activity {
         //Update lightList with a new light
         this.lightList.add(lightContextState);
 
-        //myAdapter.getMyLight(lightContextState);
-        //return LightState;
+        //Automatically lunch the recyclerView if we have all the lights.
+        if (lightList.size() == numberOfLights){
+            UpdateRecyclerView();
+        }
 
     }
 
 
-
-    //Lauch the GET to retrieveAllRoomsContextState. To remove later.
+    //Launch the GET to retrieveAllRoomsContextState. To remove later.
     public void GetRooms(View view) {
         roomContextHttpManager.retrieveAllRoomsContextState();
     }
 
+
     //update room spinner
-    public void onRoomUpdate(ArrayList<String> rooms) {
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerRoom);
-        spinner.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, rooms));
+    public void onRoomUpdate(ArrayList<RoomContextState> rooms) {
+        setContentView(R.layout.welcome_page);
+
+        this.roomList = rooms; //Set global variable
+
+        ArrayList<String> roomNames = new ArrayList<String>();
+        for (RoomContextState tempRoom : roomList){
+            roomNames.add(tempRoom.getName());
+        }
+
+        this.mySpinner = (Spinner) findViewById(R.id.spinnerRoom);
+        this.mySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roomNames));
 
     }
 
+
     /*Function to get the lights from a room in the spinner*/
     public void GetLightsOfRoom(View view) {
-        //Get light from spinner
+
+        //Get roomId from spinner
         Spinner mySpinner = (Spinner) findViewById(R.id.spinnerRoom);
-        String roomId = mySpinner.getSelectedItem().toString();
+        String roomName = mySpinner.getSelectedItem().toString();
+        String roomId = "";
+        for (RoomContextState tempRoom : roomList){
+            if(roomName.equals(tempRoom.getName())){
+                roomId = tempRoom.getRoomId();
+                this.myRoom = tempRoom;
+            }
+        }
 
         //Get all lights of a room
         roomContextHttpManager.retrieveAllLightsContextState(roomId);
 
+        //initialisation of lightList. Really useful?
         this.lightList = new ArrayList<LightContextState>();
     }
 
     public void updateLightList(ArrayList<String> lightsList){
+        //update the number of lights we have on a room.
+        this.numberOfLights = lightsList.size();
 
         //Convert ArrayList to String[].
         String[] lightsArr = new String[lightsList.size()];
         lightsArr = lightsList.toArray(lightsArr);
+
 
         //Update lightList
         for(int i = 0 ; i<lightsArr.length ; i++) {
             lightContextHttpManager.retrieveLightContextState(lightsArr[i]);
         }
 
-        /*
-        for(int i = 0 ; i<lightList.length ; i++) {
-            if(lightList[i][0] != null) {
-                String lightId = lightList[i][0];
-                lightContextHttpManager.retrieveLightContextState(lightId);
-            }
-        }
-        */
     }
-    
+
 
     //Update list of light on RecyclerView
-    public void UpdateRecyclerView(View view){
+    public void UpdateRecyclerView(){
+        //Getting the room name
+        String roomName = this.mySpinner.getSelectedItem().toString();
 
-        String status;
+        String otherName = this.myRoom.getName();
 
-        //Useless?
+
+        //Set the header for the lightInfo view.
         setContentView(R.layout.lightinfo);
-/*
-        //Convert ArrayList to String[].
-        String[] lightsArr = new String[lightsList.size()];
-        lightsArr = lightsList.toArray(lightsArr);
+        TextView headerRoomName = (TextView) findViewById(R.id.LightIdToFill);
+        headerRoomName.setText(this.myRoom.getName());
 
+        TextView headerRoomFloor = (TextView) findViewById(R.id.textViewFloor);
+        headerRoomFloor.setText(Integer.toString(this.myRoom.getFloor()));
 
-        //Get the lights info corresponding to the room.
-        for(String lightId : lightsArr ){
-            getLightContextState(null);
-            if(lightId.equals(this.LightState.getLightId())){
-                status =this.LightState.getStatus();
-            }
-        }
-*/
-
-
-        //Convert the lightList to something else
-        //...
-        String[] lightsArr = null; //DEBUG
+        TextView headerBuildinId = (TextView) findViewById(R.id.textViewbuildinId);
+        headerBuildinId.setText(this.myRoom.getName());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_lights_recycler_view);
 
