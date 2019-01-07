@@ -30,37 +30,25 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.592"/>
     <LinearLayout
             android:id="@+id/linearLayoutButtons"
-            android:layout_width="151dp"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="60dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="128dp" android:layout_marginStart="128dp">
+            android:layout_marginLeft="116dp" android:layout_marginStart="116dp">
 
 
         <Button
                 android:id="@+id/button2"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginRight="14dp"
                 android:onClick="GetRooms"
                 android:text="Reload Rooms"/>
     </LinearLayout>
-    <RelativeLayout
-            android:id="@+id/loadingPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true" tools:visibility="gone"/>
-    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

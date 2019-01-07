@@ -60,6 +60,7 @@ public class ContextManagementActivity extends Activity {
 
     public void BackToWelcome(View view) {
         setContentView(R.layout.welcome_page);
+        GetRooms(view);
     }
 
     /*to remove*/
@@ -108,10 +109,9 @@ public class ContextManagementActivity extends Activity {
 
     /*Function to get the lights from a room in the spinner*/
     public void GetLightsOfRoom(View view) {
-
+        //setContentView(R.layout.welcome_page);
         //Get roomId from spinner
-        Spinner mySpinner = (Spinner) findViewById(R.id.spinnerRoom);
-        String roomName = mySpinner.getSelectedItem().toString();
+        String roomName = this.mySpinner.getSelectedItem().toString();
         String roomId = "";
         for (RoomContextState tempRoom : roomList){
             if(roomName.equals(tempRoom.getName())){
@@ -146,14 +146,13 @@ public class ContextManagementActivity extends Activity {
 
     //Update list of light on RecyclerView
     public void UpdateRecyclerView(){
-        //Getting the room name
-        String roomName = this.mySpinner.getSelectedItem().toString();
-
-        String otherName = this.myRoom.getName();
-
 
         //Set the header for the lightInfo view.
         setContentView(R.layout.lightinfo);
+
+        TextView roomId = (TextView) findViewById(R.id.textViewRoomId);
+        roomId.setText(this.myRoom.getRoomId());
+
         TextView headerRoomName = (TextView) findViewById(R.id.LightIdToFill);
         headerRoomName.setText(this.myRoom.getName());
 
@@ -162,6 +161,8 @@ public class ContextManagementActivity extends Activity {
 
         TextView headerBuildinId = (TextView) findViewById(R.id.textViewbuildinId);
         headerBuildinId.setText(this.myRoom.getName());
+
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_lights_recycler_view);
 
@@ -175,9 +176,19 @@ public class ContextManagementActivity extends Activity {
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(lightList, lightContextHttpManager);
+
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
+
+    public void SwitchRoom(View view) {
+
+        roomContextHttpManager.switchRoom(myRoom.getRoomId());
+        //Update lights of the room
+        roomContextHttpManager.retrieveAllLightsContextState(this.myRoom.getRoomId());
+        //upDate Update RecyclerView
+        GetLightsOfRoom(view);
+    }
 
 }

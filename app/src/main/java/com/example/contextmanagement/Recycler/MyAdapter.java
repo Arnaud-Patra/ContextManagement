@@ -43,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             textToFill = (TextView) v.findViewById(R.id.LightIdToFill);
             textLevel = (TextView) v.findViewById(R.id.textLevel);
             toggle = (Switch) v.findViewById(R.id.switchLight);
+
         }
     }
 
@@ -73,8 +74,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(final MyViewHolder holder, final int position ) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-
-
 
         //Get the light information
         LightContextState Light = mDataset.get(position);

@@ -133,4 +133,44 @@ public class RoomContextHttpManager {
 
     }
 
+
+
+
+
+    public void switchRoom(final String roomId){
+
+        String url = "https://faircorp-arnaud-patra.cleverapps.io/api/rooms/"+ roomId +"/switch";
+
+        RequestQueue queue = Volley.newRequestQueue(contextManagementActivity);
+
+        StringRequest putRequest = new StringRequest
+                (Request.Method.PUT, url, new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        //TODO : Update the info of the lights... refaire un GET
+                        //retrieveLightContextState(lightId);
+                        Log.d("Response : ", response);
+                    }
+                },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                CharSequence text = "Error : room could not be switched";
+                                int duration = Toast.LENGTH_SHORT;
+                                Context context = contextManagementActivity;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+
+                                Log.d("Error.Response", String.valueOf(error));
+                            }
+                        }
+                );
+
+        queue.add(putRequest);
+
+    }
+
 }
